@@ -1,5 +1,5 @@
 // Global Values
-let counter=3;
+let counter=15;
 let currentQuestion=0;
 let core=0;
 let lost=0;
@@ -35,7 +35,8 @@ function countDown() {
 
 // Display questions and choices together
 function loadQuestion() {
-    counter=3;
+    $("#startButton").hide();
+    counter=15;
     timer= setInterval(countDown, 1000);
 
     var question = batmanQuestions[currentQuestion].question;
@@ -57,4 +58,9 @@ function loadChoices(choices) {
     }
     return result;
 }
+
+
+$("#startButton").click(function() {
 loadQuestion();
+
+})
