@@ -1,18 +1,27 @@
 // Global Values
-let counter=30;
-let currentQuestion=1;
+let counter=3;
+let currentQuestion=0;
 let core=0;
 let lost=0;
 let timer;
 
 function nextQuestion() {
+
+    const noMoreQuestions = (batmanQuestions.length -1) === currentQuestion;
+    if (noMoreQuestions) {
+        console.log("End of Game");
+    }
+    else {
     currentQuestion++;
     loadQuestion();
+    };
 }
 
 function timeUp() {
     clearInterval(timer);
     lost--; 
+
+    nextQuestion();
 }
 
 function countDown() {
@@ -26,7 +35,7 @@ function countDown() {
 
 // Display questions and choices together
 function loadQuestion() {
-    counter=30;
+    counter=3;
     timer= setInterval(countDown, 1000);
 
     var question = batmanQuestions[currentQuestion].question;
