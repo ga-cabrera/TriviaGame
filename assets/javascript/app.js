@@ -5,11 +5,33 @@ let core=0;
 let lost=0;
 let timer;
 
+function nextQuestion() {
+    currentQuestion++;
+    loadQuestion();
+}
+
+function timeUp() {
+    clearInterval(timer);
+    lost--; 
+}
+
+function countDown() {
+    counter--;
+    $('#time').html('Time Left: ' + counter);
+
+    if (counter===0) {
+        timeUp();
+    }
+}
+
 // Display questions and choices together
 function loadQuestion() {
+    counter=30;
+    timer= setInterval(countDown, 1000);
+
     var question = batmanQuestions[currentQuestion].question;
     var choices = batmanQuestions[currentQuestion].choices;
-    $("#timer").html('Time Left: ' + counter);
+    $("#time").html('Time Left: ' + counter);
     $("#game").html(`
     <h4> ${question} </h4>
     ${loadChoices(choices)}
