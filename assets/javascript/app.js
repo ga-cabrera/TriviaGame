@@ -3,10 +3,15 @@
 let counter=15;
 let currentQuestion=0;
 let score=0;
+// answerCounter & answerTimer are for transitions between selected answer and next question
+let answerCounter = 5;
+let answerTimer;
+// --------------------------
 let timer;
 var document = new Document();
 
 function nextQuestion() {
+    clearInterval(answerTimer);
 
     const noMoreQuestions = (batmanQuestions.length -1) === currentQuestion;
     if (noMoreQuestions) {
@@ -50,11 +55,26 @@ $(document).on('click', '#reset', function(){
     loadQuestion();
 })
 
-function timeUp() {
-    clearInterval(timer);
-     
+function transitionCountDown () {
+    if (answerCounter > 0) {
+        answerCounter--;
+    }
 
-    nextQuestion();
+    if (answerCounter===0) {
+        nextQuestion();
+    }
+    console.log(answerCounter)
+}
+
+function timeUp() {
+
+    var outOfTime = `
+    <h1>Time's Up Batman!</h1>
+    <p>The correct answer is: ${batmanQuestions[currentQuestion].answer}</p>
+    `
+    clearInterval(timer);
+    $("#game").html(outOfTime);
+    answerTimer = setInterval(transitionCountDown, 1000);
 }
 
 function countDown() {
@@ -72,6 +92,7 @@ function countDown() {
 function loadQuestion() {
     $("#startButton").hide();
     counter=15;
+    answerCounter = 5;
     timer= setInterval(countDown, 1000);
 
     var question = batmanQuestions[currentQuestion].question;
@@ -97,18 +118,31 @@ function loadChoices(choices) {
 
 
 function questionAnswered(selAnswer, corAnswer) {
+    var right= `
+    <h1>Correct!</h1>
+    <h3>Correct Answer: ${batmanQuestions[currentQuestion].answer}</h3>
+    <p>Keep 'em coming, Batman! Gotham is DYING to see you win.</p>
+    `
+
+    var wrong = `
+    <h1>Wrong!</h1>
+    <h3>Correct Answer: ${batmanQuestions[currentQuestion].answer}</h3>
+    <p>Bats! Your memory fails you! Enough of these and Gotham will be a pile of rubble!</p>
+    `
+    
+    
     if (selAnswer===corAnswer) {
-        alert("Congrats! Keep 'em coming! Gotham is Dying to see you win.");
+        $("#game").html(right);
         console.log("You are correct!")
         score++;
         
     }
     else {
-        alert("Uh No, Bats! Your memory fails you. Enough of these and Gotham will be a pile of rubble!!")
-
+        $("#game").html(wrong);
+        console.log("you got it wrong!")
     }
     clearInterval(timer);
-    nextQuestion();
+    answerTimer = setInterval(transitionCountDown, 1000);
     console.log("your peasant answer: " + selAnswer);
     console.log("MYYY ANSWERR: " + corAnswer);
 }
