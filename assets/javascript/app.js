@@ -11,12 +11,24 @@ function nextQuestion() {
 
     const noMoreQuestions = (batmanQuestions.length -1) === currentQuestion;
     if (noMoreQuestions) {
+        endGame();
         console.log("End of Game");
     }
     else {
     currentQuestion++;
     loadQuestion();
     };
+}
+
+function endGame () {
+
+    if (score < 5) {
+    alert("let's see, how many did did you get right? " + score + ", huh? you suck");
+    }
+
+    else {
+        alert ("Your score: " + score + ". That's enough to keep Gotham alive. Until next time, Batman.");
+    }
 }
 
 function timeUp() {
@@ -74,6 +86,7 @@ function questionAnswered(selAnswer, corAnswer) {
     }
     else {
         alert("You lose, Batsy. Enough of these and Gotham will be a pile of rubble!!")
+        score--;
 
     }
     clearInterval(timer);
