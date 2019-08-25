@@ -1,9 +1,11 @@
 // Global Values
+
 let counter=15;
 let currentQuestion=0;
 let core=0;
 let lost=0;
 let timer;
+var document = new Document();
 
 function nextQuestion() {
 
@@ -19,7 +21,7 @@ function nextQuestion() {
 
 function timeUp() {
     clearInterval(timer);
-    lost--; 
+    lost++; 
 
     nextQuestion();
 }
@@ -63,4 +65,9 @@ function loadChoices(choices) {
 $("#startButton").click(function() {
 loadQuestion();
 
+})
+
+$(document).on('click', '.choice', function(){
+    var selectedAnswer = $(this).attr('data-answer');
+    console.log(selectedAnswer);
 })
