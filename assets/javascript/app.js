@@ -69,5 +69,7 @@ loadQuestion();
 
 $(document).on('click', '.choice', function(){
     var selectedAnswer = $(this).attr('data-answer');
-    console.log(selectedAnswer);
+    var correctAnswer = batmanQuestions[currentQuestion].answer;
+    console.log("your peasant answer: " + selectedAnswer);
+    console.log("MYYY ANSWERR: " + correctAnswer);
 })
