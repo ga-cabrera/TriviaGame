@@ -3,7 +3,6 @@
 let counter=15;
 let currentQuestion=0;
 let score=0;
-let lost=0;
 let timer;
 var document = new Document();
 
@@ -21,19 +20,39 @@ function nextQuestion() {
 }
 
 function endGame () {
-
-    if (score < 5) {
-    alert("let's see, how many did did you get right? " + score + ", huh? you suck");
+    var gameOver = `
+    <h1>Game Over</h1>
+    <h3>Score: ${score}??</h3>
+    <p> Enjoy your city in ASHES!</p>
+    <button class= "btn btn-dark" id= "reset">Play Again</button>
+    `
+    var happyEnding = `
+    <h1>Game Over</h1>
+    <h3>Score: ${score}</h3>
+    <p> Guess that's enough to keep your precious Gotham alive. Until next time, Batman!</p>
+    <button class= "btn btn-dark" id= "reset">Play Again</button>
+    `
+    if (score < 4) {
+        $("#game").html(gameOver);
     }
 
     else {
-        alert ("Your score: " + score + ". That's enough to keep Gotham alive. Until next time, Batman.");
+        $("#game").html(happyEnding);
     }
 }
 
+// click function for resetting game
+$(document).on('click', '#reset', function(){
+    counter = 15;
+    currentQuestion = 0;
+    score = 0;
+    timer = null;
+    loadQuestion();
+})
+
 function timeUp() {
     clearInterval(timer);
-    lost++; 
+     
 
     nextQuestion();
 }
@@ -79,14 +98,13 @@ function loadChoices(choices) {
 
 function questionAnswered(selAnswer, corAnswer) {
     if (selAnswer===corAnswer) {
-        alert("congrats! That is correct");
+        alert("Congrats! Keep 'em coming! Gotham is Dying to see you win.");
         console.log("You are correct!")
         score++;
         
     }
     else {
-        alert("You lose, Batsy. Enough of these and Gotham will be a pile of rubble!!")
-        score--;
+        alert("Uh No, Bats! Your memory fails you. Enough of these and Gotham will be a pile of rubble!!")
 
     }
     clearInterval(timer);
