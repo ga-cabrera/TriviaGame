@@ -1,7 +1,7 @@
 var batmanQuestions = [
     {
         question: "Who played Batman in Batman v Superman: Dawn of Justice (2016)?",
-        choices: ["George Clooney", "Christian Bale", "Ben Affleck", "", "Robert Pattinson"],
+        choices: ["George ClooneyS", "Christian Bale", "Ben Affleck", "", "Robert Pattinson"],
         answer: "Ben Affleck"
     },
     {
